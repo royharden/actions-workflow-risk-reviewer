@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "status": "pending",
+  "note": "No scanner was run. Versions, flags, mapping identifiers and native JSON shapes need verification. Handmade samples never populate these receipt slots.",
+  "runs": [
+    {
+      "tool": "zizmor",
+      "split": "dev",
+      "persona": "regular",
+      "config": null,
+      "receipt": null
+    },
+    {
+      "tool": "zizmor",
+      "split": "dev",
+      "persona": "pedantic",
+      "config": null,
+      "receipt": null
+    },
+    {
+      "tool": "poutine",
+      "split": "dev",
+      "persona": "default",
+      "config": null,
+      "receipt": null
+    },
+    {
+      "tool": "zizmor",
+      "split": "heldout",
+      "persona": "regular",
+      "config": null,
+      "receipt": null
+    },
+    {
+      "tool": "zizmor",
+      "split": "heldout",
+      "persona": "pedantic",
+      "config": null,
+      "receipt": null
+    },
+    {
+      "tool": "poutine",
+      "split": "heldout",
+      "persona": "default",
+      "config": null,
+      "receipt": null
+    }
+  ]
+}

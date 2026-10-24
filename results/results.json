@@ -1,0 +1,845 @@
+{
+  "schemaVersion": 1,
+  "status": "pending",
+  "generatedAt": null,
+  "manifestSha256": null,
+  "caveats": [
+    "Source prepared; runtime unverified. No evaluation, scanner, model or test has been executed.",
+    "Small fixture sets do not establish real-world accuracy. n < 3 is not measurable on this set; zero denominators are N/A.",
+    "Mapped rules differ in granularity. Separate dev/heldout and regular/pedantic rows; never pool simulated and live data.",
+    "Hand-written explanations and handmade baseline samples are excluded from measurements."
+  ],
+  "rows": [
+    {
+      "split": "dev",
+      "tool": "rules",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+gates",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+gates",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+gates",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+gates",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+gates",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+gates",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+model (cached-live)",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+model (cached-live)",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+model (cached-live)",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+model (cached-live)",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+model (cached-live)",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "rules+model (cached-live)",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (regular)",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (regular)",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (regular)",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (regular)",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (regular)",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (regular)",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (pedantic)",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (pedantic)",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (pedantic)",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (pedantic)",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (pedantic)",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "zizmor (pedantic)",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "poutine",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "poutine",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "poutine",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "poutine",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "poutine",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "dev",
+      "tool": "poutine",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+gates",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+gates",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+gates",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+gates",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+gates",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+gates",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+model (cached-live)",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+model (cached-live)",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+model (cached-live)",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+model (cached-live)",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+model (cached-live)",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "rules+model (cached-live)",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (regular)",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (regular)",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (regular)",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (regular)",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (regular)",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (regular)",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (pedantic)",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (pedantic)",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (pedantic)",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (pedantic)",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (pedantic)",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "zizmor (pedantic)",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "poutine",
+      "rule": "unpinned-uses",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "poutine",
+      "rule": "excessive-permissions",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "poutine",
+      "rule": "privileged-trigger-checkout",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "poutine",
+      "rule": "template-injection",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "poutine",
+      "rule": "secrets-exposure",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    },
+    {
+      "split": "heldout",
+      "tool": "poutine",
+      "rule": "self-hosted-on-untrusted-trigger",
+      "status": "not yet measured",
+      "metrics": null,
+      "unmapped": null,
+      "falseNegativeItemIds": [],
+      "falsePositivePredictionIds": []
+    }
+  ],
+  "triage": [
+    {
+      "split": "dev",
+      "method": "gates (all)",
+      "provenance": "gates",
+      "status": "not yet measured",
+      "metrics": null
+    },
+    {
+      "split": "dev",
+      "method": "gates (paired)",
+      "provenance": "cached-live",
+      "status": "not yet measured",
+      "metrics": null
+    },
+    {
+      "split": "dev",
+      "method": "model only (cached)",
+      "provenance": "cached-live",
+      "status": "not yet measured",
+      "metrics": null
+    },
+    {
+      "split": "dev",
+      "method": "gates+model (cached)",
+      "provenance": "cached-live",
+      "status": "not yet measured",
+      "metrics": null
+    },
+    {
+      "split": "heldout",
+      "method": "gates (all)",
+      "provenance": "gates",
+      "status": "not yet measured",
+      "metrics": null
+    },
+    {
+      "split": "heldout",
+      "method": "gates (paired)",
+      "provenance": "cached-live",
+      "status": "not yet measured",
+      "metrics": null
+    },
+    {
+      "split": "heldout",
+      "method": "model only (cached)",
+      "provenance": "cached-live",
+      "status": "not yet measured",
+      "metrics": null
+    },
+    {
+      "split": "heldout",
+      "method": "gates+model (cached)",
+      "provenance": "cached-live",
+      "status": "not yet measured",
+      "metrics": null
+    }
+  ],
+  "coverage": [],
+  "fixes": [],
+  "citations": [
+    {
+      "split": "dev",
+      "source": "cached-live",
+      "status": "not yet measured",
+      "supported": null,
+      "unsupported": null,
+      "omittedFindingIds": []
+    },
+    {
+      "split": "heldout",
+      "source": "cached-live",
+      "status": "not yet measured",
+      "supported": null,
+      "unsupported": null,
+      "omittedFindingIds": []
+    }
+  ],
+  "costs": [
+    {
+      "split": "dev",
+      "status": "not yet measured",
+      "runId": null,
+      "model": null,
+      "priceVerifiedOn": null,
+      "priceSource": "server response paired with ledger id",
+      "effectiveUsd": null,
+      "perFindingUsd": null,
+      "chargedFindingCount": null,
+      "omitted": []
+    },
+    {
+      "split": "heldout",
+      "status": "not yet measured",
+      "runId": null,
+      "model": null,
+      "priceVerifiedOn": null,
+      "priceSource": "server response paired with ledger id",
+      "effectiveUsd": null,
+      "perFindingUsd": null,
+      "chargedFindingCount": null,
+      "omitted": []
+    }
+  ],
+  "humanCheck": {
+    "status": "not yet measured",
+    "limit": 20,
+    "candidateFindingIds": [],
+    "note": "Separate human inspection of up to 20 passing fixes; keep human judgments out of automated numbers."
+  },
+  "namedFailures": []
+}

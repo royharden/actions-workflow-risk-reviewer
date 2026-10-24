@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "tools": {
+    "zizmor": {
+      "unpinned-uses": "unpinned-uses",
+      "excessive-permissions": "excessive-permissions",
+      "dangerous-triggers": "privileged-trigger-checkout",
+      "template-injection": "template-injection",
+      "artipacked": "secrets-exposure",
+      "secrets-inherit": "secrets-exposure",
+      "self-hosted-runner": "self-hosted-on-untrusted-trigger",
+      "cache-poisoning": "unmapped"
+    },
+    "poutine": {
+      "unpinned-action": "unpinned-uses",
+      "excessive-permissions": "excessive-permissions",
+      "untrusted-checkout": "privileged-trigger-checkout",
+      "injection": "template-injection",
+      "credentials-exposure": "secrets-exposure",
+      "self-hosted-runner": "self-hosted-on-untrusted-trigger",
+      "artifact-poisoning": "unmapped"
+    }
+  }
+}

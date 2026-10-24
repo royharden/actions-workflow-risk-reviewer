@@ -1,0 +1,26 @@
+{
+  "source": "hand-written-format-sample",
+  "notAMeasurement": true,
+  "formatVerified": false,
+  "note": "Provisional shape only; not an actual poutine report.",
+  "output": {
+    "findings": [
+      {
+        "rule_id": "unpinned-action",
+        "file": "fixtures/workflows/dev/example.yml",
+        "start_line": 10,
+        "end_line": 10,
+        "job_id": "build",
+        "step_index": 0
+      },
+      {
+        "rule_id": "unknown-example-rule",
+        "file": "fixtures/workflows/dev/example.yml",
+        "start_line": 4,
+        "end_line": 4,
+        "job_id": "build",
+        "step_index": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "source": "hand-written-format-sample",
+  "notAMeasurement": true,
+  "formatVerified": false,
+  "note": "Assumed native shape for parser tests only. Confirm against a pinned real release before activation.",
+  "output": [
+    {
+      "ident": "unpinned-uses",
+      "locations": [
+        {
+          "symbolic": {
+            "key": "fixtures/workflows/dev/example.yml",
+            "route": [
+              "jobs",
+              "build",
+              "steps",
+              0,
+              "uses"
+            ]
+          },
+          "concrete": {
+            "feature": {
+              "start_point": {
+                "row": 9,
+                "column": 4
+              },
+              "end_point": {
+                "row": 9,
+                "column": 30
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "ident": "unknown-example-audit",
+      "locations": [
+        {
+          "symbolic": {
+            "key": "fixtures/workflows/dev/example.yml",
+            "route": [
+              "jobs",
+              "build"
+            ]
+          },
+          "concrete": {
+            "feature": {
+              "start_point": {
+                "row": 3,
+                "column": 0
+              },
+              "end_point": {
+                "row": 4,
+                "column": 0
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

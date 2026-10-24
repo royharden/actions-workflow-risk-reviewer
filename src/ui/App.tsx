@@ -17,9 +17,11 @@ import { FindingList } from './FindingList';
 import { ExportBar } from './ExportBar';
 import { AuthGate } from './AuthGate';
 import { clearExplanationConsents } from './ConsentDialog';
+import { EvalTab } from './EvalTab';
 
 export function App() {
   const mode = useMemo(() => getMode(), []);
+  const [tab, setTab] = useState<'review' | 'evaluation'>('review');
   return (
     <div className="app">
       <header className="app-header">
@@ -27,9 +29,16 @@ export function App() {
         <p className="muted">Six deterministic rules over workflow YAML, run in this browser.</p>
       </header>
       <SetupBanner mode={mode} />
+      <nav aria-label="Workbench views">
+        <button type="button" aria-pressed={tab === 'review'} onClick={() => setTab('review')}>Review workflows</button>
+        <button type="button" aria-pressed={tab === 'evaluation'} onClick={() => setTab('evaluation')}>Evaluation</button>
+      </nav>
+      <div hidden={tab !== 'review'}>
       <AuthGate mode={mode}>
         {(session) => <ReviewWorkbench key={mode.kind === 'demo' ? 'demo' : session?.user.id ?? 'signed-out'} mode={mode} userId={session?.user.id ?? null} />}
       </AuthGate>
+      </div>
+      <div hidden={tab !== 'evaluation'}><EvalTab /></div>
     </div>
   );
 }
