@@ -61,6 +61,7 @@ export function joinSpans(a: Span, b: Span): Span {
 interface LBase {
   span: Span;
   aliased: boolean;
+  anchored: boolean;
   yaml: YamlNode | null; // null only for an absent pair value
 }
 

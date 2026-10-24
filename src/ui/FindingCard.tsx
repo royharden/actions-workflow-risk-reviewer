@@ -1,11 +1,16 @@
 import type { Facts, Finding } from '../core/finding';
+import type { FixView, RulingDecision, RulingStatus } from '../lib/review';
+import { DiffView } from './DiffView';
+import { RulingBar } from './RulingBar';
+
+export const GATE_LABEL = 'gate observed — exploitability unverified';
 
 interface Chip {
   label: string;
   value: string;
 }
 
-/** Facts worth showing as chips; `detail` is rendered as a sentence and `gateEvidence` arrives with M2 gates. */
+/** Facts worth showing as chips; `detail` is rendered as a sentence and `gateEvidence` as its own list. */
 function factChips(facts: Facts): Chip[] {
   const chips: Chip[] = [];
   const add = (label: string, value: string | boolean | undefined) => {
@@ -30,7 +35,15 @@ function factChips(facts: Facts): Chip[] {
   return chips;
 }
 
-export function FindingCard({ finding }: { finding: Finding }) {
+interface FindingCardProps {
+  finding: Finding;
+  fix?: FixView;
+  ruling?: RulingStatus;
+  rulingDisabled?: boolean;
+  onRule?(finding: Finding, decision: RulingDecision, reason: string | undefined): void;
+}
+
+export function FindingCard({ finding, fix, ruling, rulingDisabled, onRule }: FindingCardProps) {
   const { span } = finding;
   // Assumes the snippet's first line is span.startLine (core keeps snippet = the spanned source lines).
   const lines = finding.snippet.split('\n');
@@ -62,7 +75,28 @@ export function FindingCard({ finding }: { finding: Finding }) {
           </li>
         ))}
       </ul>
+      {finding.facts.gateEvidence.length > 0 && (
+        <div className="gate-evidence small">
+          <strong>{GATE_LABEL}</strong>
+          <ul>
+            {finding.facts.gateEvidence.map((gate, index) => (
+              <li key={index}>
+                {gate.gate} · line {gate.line}: <code>{gate.text}</code>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <p className="muted small">fingerprint {finding.fingerprint.slice(0, 12)}</p>
+      {fix !== undefined && <DiffView findingId={finding.id} fix={fix} />}
+      {ruling !== undefined && onRule !== undefined && (
+        <RulingBar
+          status={ruling}
+          fixAvailable={fix?.kind === 'passed'}
+          disabled={rulingDisabled}
+          onRule={(decision, reason) => onRule(finding, decision, reason)}
+        />
+      )}
     </article>
   );
 }

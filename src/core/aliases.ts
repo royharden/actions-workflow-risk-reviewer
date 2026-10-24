@@ -79,7 +79,7 @@ class Expander {
 
   expand(node: unknown, fallback: Span, aliasSite: Span | null, stack: YamlNode[], depth: number): LNode {
     if (node === null || node === undefined) {
-      return { kind: 'scalar', value: null, text: '', style: 'plain', span: aliasSite ?? fallback, aliased: aliasSite !== null, yaml: null };
+      return { kind: 'scalar', value: null, text: '', style: 'plain', span: aliasSite ?? fallback, aliased: aliasSite !== null, anchored: false, yaml: null };
     }
     if (isAlias(node)) {
       if (++this.resolutions > MAX_ALIAS_RESOLUTIONS) {
@@ -106,7 +106,7 @@ class Expander {
       const entries: LEntry[] = [];
       for (const pair of node.items) entries.push(this.entry(pair, aliasSite, stack, depth));
       stack.pop();
-      const map: LMap = { kind: 'map', entries, span, aliased, yaml: node };
+      const map: LMap = { kind: 'map', entries, span, aliased, anchored: Boolean(node.anchor), yaml: node };
       return map;
     }
 
@@ -115,7 +115,7 @@ class Expander {
       const items: LNode[] = [];
       for (const item of node.items) items.push(this.expand(item, span, aliasSite, stack, depth + 1));
       stack.pop();
-      return { kind: 'seq', items, span, aliased, yaml: node };
+      return { kind: 'seq', items, span, aliased, anchored: Boolean(node.anchor), yaml: node };
     }
 
     throw new UnsupportedShape('unrecognised YAML node', lineOf(this.source, node));
@@ -124,7 +124,7 @@ class Expander {
   private scalar(node: Scalar, span: Span, aliased: boolean): LScalar {
     const value: unknown = node.value;
     const text = value === null || value === undefined ? '' : typeof value === 'string' ? value : String(value);
-    return { kind: 'scalar', value, text, style: styleOf(node), span, aliased, yaml: node };
+    return { kind: 'scalar', value, text, style: styleOf(node), span, aliased, anchored: Boolean(node.anchor), yaml: node };
   }
 
   private entry(pair: Pair<unknown, unknown>, aliasSite: Span | null, stack: YamlNode[], depth: number): LEntry {

@@ -124,7 +124,7 @@ export function classifyExpression(inner: string): ContextClass | null {
 // ---------------------------------------------------------------------------
 
 const EXECUTES =
-  /(^|[\s;&|(`])(npm|npx|yarn|pnpm|bun|make|gradle|gradlew|mvn|cargo|go|pip|pip3|python|python3|node|ruby|bundle|rake|tox|pytest|composer|dotnet|bash|sh)(\s|$)|(^|[\s;&|(`])\.{1,2}\/[A-Za-z0-9_./-]+/m;
+  /(?:^|&&|[;|]|\bthen\s+)\s*(?:(?:npm|npx|yarn|pnpm|bun|make|gradle|gradlew|mvn|cargo|go|pip|pip3|python|python3|node|ruby|bundle|rake|tox|pytest|composer|dotnet)(?:\s|$)|(?:bash|sh)\s+[^\n;&|]*\.sh(?:\s|$)|\.{1,2}\/[A-Za-z0-9_./-]+)/m;
 
 export function stepExecutesCheckedOutCode(step: Step): boolean {
   if (step.usesValue && step.usesValue.trim().startsWith('./')) return true;

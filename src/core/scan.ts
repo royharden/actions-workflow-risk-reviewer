@@ -51,7 +51,12 @@ export async function scan(files: InputFile[], hasher: Hasher): Promise<ScanResu
 async function scanFile(file: InputFile, hasher: Hasher): Promise<FileResult> {
   // Hash of the original text (CRLF kept); lines are mapped on the LF-normalized text.
   const fileHash = await hasher.sha256Hex(file.text);
-  const parsed = parseWorkflow(file.text);
+  let parsed: ReturnType<typeof parseWorkflow>;
+  try {
+    parsed = parseWorkflow(file.text);
+  } catch {
+    return { name: file.name, fileHash, status: 'error', reason: 'internal parse error', coverageNotes: [], findings: [] };
+  }
   if (!parsed.ok) {
     const result: FileResult = { name: file.name, fileHash, status: parsed.status, reason: parsed.reason, coverageNotes: [], findings: [] };
     if (parsed.line !== undefined) result.errorLine = parsed.line;
@@ -99,4 +104,11 @@ export function compareFindings(a: Finding, b: Finding): number {
 /** Code-unit order: deterministic across hosts, unlike localeCompare. */
 function compareText(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
+}
+
+/** Single-file checker seam; uses the same input, parser and rule limits as scan. */
+export async function scanText(name: string, text: string, hasher: Hasher): Promise<FileResult> {
+  const errors = validateInputs([{ name, text }]);
+  if (errors.length > 0) return { name, fileHash: await hasher.sha256Hex(text), status: 'error', reason: errors.join('; '), coverageNotes: [], findings: [] };
+  return scanFile({ name, text }, hasher);
 }

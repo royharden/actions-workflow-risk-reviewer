@@ -1,0 +1,30 @@
+import type { Finding } from '../finding';
+import type { ParseOk } from '../parse';
+import { targetStep, uneditable, flow } from './types';
+import type { FixContext, Proposal } from './types';
+export function propose(parsed: ParseOk, finding: Finding, ctx: FixContext): Proposal {
+  const wf = parsed.workflow;
+  const job = wf.jobs.find((item) => item.id === finding.jobId);
+  const step = targetStep(parsed, finding);
+  const entry = finding.stepKey === null ? job?.uses : step?.uses;
+  const parent = finding.stepKey === null ? job?.map : step?.map;
+  if (!entry || entry.value.kind !== 'scalar') return { ok: false, reason: 'target_missing' };
+  if (finding.facts.aliased || uneditable(wf.root) || uneditable(job?.entry.value) || uneditable(parent) || uneditable(entry.value)) return { ok: false, reason: 'aliased_target' };
+  if (flow(wf.root) || flow(parent)) return { ok: false, reason: 'flow_style' };
+  const uses = entry.value.text;
+  const at = uses.lastIndexOf('@');
+  if (at < 1 || uses.startsWith('docker://') || uses.startsWith('./')) return { ok: false, reason: 'manual_fix' };
+  const action = uses.slice(0, at), fromRef = uses.slice(at + 1);
+  const rows = ctx.pins.filter((pin) => pin.action === action && pin.fromRef === fromRef);
+  if (rows.length === 0) return { ok: false, reason: 'needs_lookup' };
+  if (rows.length !== 1 || !/^[a-fA-F0-9]{40}$/.test(rows[0].sha)) return { ok: false, reason: 'pin_key_mismatch' };
+  const range = entry.value.yaml?.range;
+  if (!range || entry.span.startLine !== entry.span.endLine) return { ok: false, reason: 'manual_fix' };
+  const start = wf.source.lineStarts[entry.span.startLine - 1];
+  const original = wf.source.lines[entry.span.startLine - 1];
+  const oldRaw = parsed.normalizedText.slice(range[0], range[1]);
+  const quote = entry.value.style === 'single' ? "'" : entry.value.style === 'double' ? '"' : '';
+  if (oldRaw !== `${quote}${uses}${quote}`) return { ok: false, reason: 'manual_fix' };
+  const replacement = original.slice(0, range[0] - start) + `${quote}${action}@${rows[0].sha}${quote}` + original.slice(range[1] - start);
+  return { ok: true, ops: [{ startLine: entry.span.startLine, endLine: entry.span.endLine, replacement }], description: `Pin ${action}@${fromRef} to the supplied table SHA (${rows[0].source ?? 'table'}).` };
+}

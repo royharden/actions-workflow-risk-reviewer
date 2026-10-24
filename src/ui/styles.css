@@ -332,3 +332,27 @@ textarea {
 footer {
   margin: 16px 0;
 }
+
+.workflow-editor { margin-top: 8px; }
+.workflow-editor label { display: grid; gap: 4px; margin-top: 8px; }
+.workflow-editor textarea { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+summary { cursor: pointer; font-weight: 600; }
+.benign-group { border-top: 1px solid var(--border); margin-top: 16px; padding-top: 12px; }
+.gate-evidence, .ruling-bar, .fix { border-top: 1px solid var(--border); margin-top: 10px; padding-top: 8px; }
+.ruling-reason { display: grid; gap: 4px; flex: 1 1 220px; }
+.storage-note, .fix-warning { background: var(--demo-bg); border: 1px solid var(--demo-border); border-radius: 4px; padding: 8px; }
+.fix-label { font-weight: 600; }
+.diff { overflow-x: auto; border: 1px solid var(--border); border-radius: 4px; margin: 8px 0; background: var(--code-bg); }
+.diff-line { white-space: pre; padding: 0 8px; min-height: 1.45em; font-size: 0.85rem; }
+.diff-add { background: #d8f5df; color: #16452a; }
+.diff-del { background: #fce0e0; color: #722525; }
+.diff-hunk { background: #e0eafa; color: #233f74; }
+.diff-file, .diff-meta { color: var(--muted); }
+.single-patches { padding-left: 20px; overflow-wrap: anywhere; }
+.local-data .row { align-items: center; justify-content: space-between; }
+.local-data p { margin: 6px 0; }
+@media (prefers-color-scheme: dark) {
+  .diff-add { background: #173d29; color: #b4edc7; }
+  .diff-del { background: #492626; color: #ffc2c2; }
+  .diff-hunk { background: #25334b; color: #b4cef9; }
+}
