@@ -11,6 +11,7 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
     "noEmit": true,
+    "allowImportingTsExtensions": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -19,3 +20,4 @@
   },
   "include": ["scripts", "tests", "vite.config.ts", "vitest.config.ts"]
 }
+

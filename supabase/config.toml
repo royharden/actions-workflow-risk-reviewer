@@ -1,0 +1,3 @@
+# JWT gateway validation remains enabled; handler additionally verifies the user through auth.getUser.
+[functions.explain-finding]
+verify_jwt = true

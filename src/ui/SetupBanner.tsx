@@ -20,7 +20,7 @@ export function SetupBanner({ mode }: { mode: AppMode }) {
       return (
         <div className="banner banner-live" role="status">
           <strong>Live mode.</strong>
-          <span className="small"> Scanning runs in this browser. Sign-in and Explain arrive in a later build.</span>
+          <span className="small"> Scanning runs in this browser. Sign in to save a review run; Explain sends a bounded excerpt after your consent.</span>
         </div>
       );
     case 'setup-error':

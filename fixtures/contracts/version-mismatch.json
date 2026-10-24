@@ -1,0 +1,26 @@
+{
+  "name": "version-mismatch",
+  "request": {
+    "schemaVersion": 2,
+    "runId": "11111111-1111-4111-8111-111111111111",
+    "findingFingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "ruleId": "unpinned-uses",
+    "facts": {
+      "uses": "actions/checkout@v4"
+    },
+    "excerptLines": [
+      {
+        "line": 1,
+        "text": "uses: actions/checkout@v4"
+      }
+    ],
+    "idempotencyKey": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "headers": {
+    "authorization": "Bearer synthetic-test-jwt"
+  },
+  "expectStatus": 400,
+  "expectBody": {
+    "error": "schema_version_mismatch"
+  }
+}

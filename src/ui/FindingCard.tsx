@@ -2,6 +2,7 @@ import type { Facts, Finding } from '../core/finding';
 import type { FixView, RulingDecision, RulingStatus } from '../lib/review';
 import { DiffView } from './DiffView';
 import { RulingBar } from './RulingBar';
+import { ExplainPanel, type ExplainPanelProps } from './ExplainPanel';
 
 export const GATE_LABEL = 'gate observed — exploitability unverified';
 
@@ -40,10 +41,11 @@ interface FindingCardProps {
   fix?: FixView;
   ruling?: RulingStatus;
   rulingDisabled?: boolean;
+  explanation?: Omit<ExplainPanelProps, 'finding'>;
   onRule?(finding: Finding, decision: RulingDecision, reason: string | undefined): void;
 }
 
-export function FindingCard({ finding, fix, ruling, rulingDisabled, onRule }: FindingCardProps) {
+export function FindingCard({ finding, fix, ruling, rulingDisabled, explanation, onRule }: FindingCardProps) {
   const { span } = finding;
   // Assumes the snippet's first line is span.startLine (core keeps snippet = the spanned source lines).
   const lines = finding.snippet.split('\n');
@@ -88,6 +90,7 @@ export function FindingCard({ finding, fix, ruling, rulingDisabled, onRule }: Fi
         </div>
       )}
       <p className="muted small">fingerprint {finding.fingerprint.slice(0, 12)}</p>
+      {explanation !== undefined && <ExplainPanel finding={finding} {...explanation} />}
       {fix !== undefined && <DiffView findingId={finding.id} fix={fix} />}
       {ruling !== undefined && onRule !== undefined && (
         <RulingBar

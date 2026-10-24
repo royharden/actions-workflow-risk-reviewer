@@ -1,0 +1,35 @@
+{
+  "name": "bad-model-output",
+  "request": {
+    "schemaVersion": 1,
+    "runId": "11111111-1111-4111-8111-111111111111",
+    "findingFingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "ruleId": "unpinned-uses",
+    "facts": {
+      "uses": "actions/checkout@v4"
+    },
+    "excerptLines": [
+      {
+        "line": 1,
+        "text": "uses: actions/checkout@v4"
+      }
+    ],
+    "idempotencyKey": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "headers": {
+    "authorization": "Bearer synthetic-test-jwt"
+  },
+  "expectStatus": 200,
+  "expectBody": {
+    "schemaVersion": 1,
+    "promptVersion": "explain-finding/2026-10-24.1",
+    "model": "test-model",
+    "rawText": "{\"triage\":\"confirmed\",\"severity\":\"critical\"}",
+    "usage": {
+      "inputTokens": 100,
+      "outputTokens": 40
+    },
+    "ledgerId": "33333333-3333-4333-8333-333333333333",
+    "priceVerifiedOn": "2026-10-24"
+  }
+}

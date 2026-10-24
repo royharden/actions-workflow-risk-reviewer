@@ -1,0 +1,94 @@
+{
+  "entries": [
+    {
+      "source": "hand-written",
+      "rule": "privileged-trigger-checkout",
+      "rawText": "{\"triage\":\"confirmed\",\"citations\":[{\"line\":15,\"quote\":\"uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab\"}],\"explanation\":\"Hand-written simulated explanation; lexical citations do not prove exploitability.\"}",
+      "fileHash": "66d1d389eec34c665ff51deb84b8e960a43a3442eb8231cebc1105bb31ce16ab",
+      "startLine": 15,
+      "promptVersion": "explain-finding/2026-10-24.1",
+      "ruleVersion": "1",
+      "model": "hand-written-example",
+      "file": "d01-prt-head-checkout.yml"
+    },
+    {
+      "source": "hand-written",
+      "rule": "privileged-trigger-checkout",
+      "rawText": "{\"triage\":\"likely_benign\",\"citations\":[{\"line\":16,\"quote\":\"uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab\"}],\"explanation\":\"Hand-written simulated explanation; lexical citations do not prove exploitability.\"}",
+      "fileHash": "253e6940c74c4365bc19b6e8c96c55d2396a024b990db87ec11208f94bf61d82",
+      "startLine": 16,
+      "promptVersion": "explain-finding/2026-10-24.1",
+      "ruleVersion": "1",
+      "model": "hand-written-example",
+      "file": "d02-prt-label-gated.yml"
+    },
+    {
+      "source": "hand-written",
+      "rule": "template-injection",
+      "rawText": "{\"triage\":\"confirmed\",\"citations\":[{\"line\":16,\"quote\":\"DELIBERATELY INVALID CITATION\"}],\"explanation\":\"Hand-written simulated explanation; lexical citations do not prove exploitability.\"}",
+      "fileHash": "e166db3b9a3452f79fc78ff606ce7d7b131568cbde6b25e73663c2a37b25fe4a",
+      "startLine": 16,
+      "promptVersion": "explain-finding/2026-10-24.1",
+      "ruleVersion": "1",
+      "model": "hand-written-example",
+      "file": "d03-pr-title-body-injection.yml"
+    },
+    {
+      "source": "hand-written",
+      "rule": "template-injection",
+      "rawText": "{\"triage\":\"confirmed\",\"citations\":[{\"line\":17,\"quote\":\"DELIBERATELY INVALID CITATION\"}],\"explanation\":\"Hand-written simulated explanation; lexical citations do not prove exploitability.\"}",
+      "fileHash": "e166db3b9a3452f79fc78ff606ce7d7b131568cbde6b25e73663c2a37b25fe4a",
+      "startLine": 17,
+      "promptVersion": "explain-finding/2026-10-24.1",
+      "ruleVersion": "1",
+      "model": "hand-written-example",
+      "file": "d03-pr-title-body-injection.yml"
+    },
+    {
+      "source": "hand-written",
+      "rule": "template-injection",
+      "rawText": "{\"triage\":\"likely_benign\",\"citations\":[{\"line\":19,\"quote\":\"run: echo \\\"Deploying to ${{ inputs.target }}\\\"\"}],\"explanation\":\"Hand-written simulated explanation; lexical citations do not prove exploitability.\"}",
+      "fileHash": "2f7711ecb86b152a0398a3d61a0eb8f0f8b68b8c27e66d132bd1a262a5553b9a",
+      "startLine": 19,
+      "promptVersion": "explain-finding/2026-10-24.1",
+      "ruleVersion": "1",
+      "model": "hand-written-example",
+      "file": "d04-dispatch-input-injection.yml"
+    },
+    {
+      "source": "hand-written",
+      "rule": "unpinned-uses",
+      "rawText": "{\"triage\":\"confirmed\",\"citations\":[{\"line\":14,\"quote\":\"- uses: actions/checkout@v4\"}],\"explanation\":\"Hand-written simulated explanation; lexical citations do not prove exploitability.\"}",
+      "fileHash": "69f8d10b6cbf08a71144d8147e0af9edc52d55a9d462a1853be970091482f6b2",
+      "startLine": 14,
+      "promptVersion": "explain-finding/2026-10-24.1",
+      "ruleVersion": "1",
+      "model": "hand-written-example",
+      "file": "d05-unpinned-checkout.yml"
+    },
+    {
+      "source": "hand-written",
+      "rule": "unpinned-uses",
+      "rawText": "{\"triage\":\"confirmed\",\"citations\":[{\"line\":15,\"quote\":\"- uses: actions/setup-node@v4\"}],\"explanation\":\"Hand-written simulated explanation; lexical citations do not prove exploitability.\"}",
+      "fileHash": "69f8d10b6cbf08a71144d8147e0af9edc52d55a9d462a1853be970091482f6b2",
+      "startLine": 15,
+      "promptVersion": "explain-finding/2026-10-24.1",
+      "ruleVersion": "1",
+      "model": "hand-written-example",
+      "file": "d05-unpinned-checkout.yml"
+    },
+    {
+      "source": "hand-written",
+      "rule": "unpinned-uses",
+      "rawText": "{\"triage\":\"confirmed\",\"citations\":[{\"line\":18,\"quote\":\"- uses: actions/cache@v4\"}],\"explanation\":\"Hand-written simulated explanation; lexical citations do not prove exploitability.\"}",
+      "fileHash": "69f8d10b6cbf08a71144d8147e0af9edc52d55a9d462a1853be970091482f6b2",
+      "startLine": 18,
+      "promptVersion": "explain-finding/2026-10-24.1",
+      "ruleVersion": "1",
+      "model": "hand-written-example",
+      "file": "d05-unpinned-checkout.yml"
+    }
+  ],
+  "_note": "Hand-written simulated examples for dev fixtures only, not model output or evaluation measurements. d03 deliberately has an unsupported citation."
+}
+
