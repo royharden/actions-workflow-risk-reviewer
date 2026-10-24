@@ -1,0 +1,334 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f7f7f8;
+  --panel: #ffffff;
+  --text: #1c1d21;
+  --muted: #5f6370;
+  --border: #d9dbe1;
+  --code-bg: #f1f2f4;
+  --accent: #2f5bd3;
+  --accent-text: #ffffff;
+  --demo-bg: #fff6d6;
+  --demo-border: #e2c35a;
+  --live-bg: #e3f3e8;
+  --live-border: #6cb486;
+  --error-bg: #fde4e4;
+  --error-border: #d46a6a;
+  --error-text: #8a1f1f;
+  --sev-critical: #8a1f1f;
+  --sev-high: #b44a12;
+  --sev-medium: #8a6a00;
+  --sev-low: #3d6a8a;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.45;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15161a;
+    --panel: #1e2026;
+    --text: #e6e7eb;
+    --muted: #a0a4b0;
+    --border: #353844;
+    --code-bg: #262932;
+    --accent: #7e9cf0;
+    --accent-text: #11131a;
+    --demo-bg: #3a3214;
+    --demo-border: #8a7425;
+    --live-bg: #183022;
+    --live-border: #3f7a55;
+    --error-bg: #3d1c1c;
+    --error-border: #9b4545;
+    --error-text: #f2b3b3;
+    --sev-critical: #ff8f8f;
+    --sev-high: #ffad7a;
+    --sev-medium: #e8c867;
+    --sev-low: #8fc0e6;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 4px;
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin: 0 0 12px;
+}
+
+h3,
+h4,
+h5 {
+  margin: 12px 0 6px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+code,
+pre,
+textarea,
+.snippet {
+  font-family: ui-monospace, SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+}
+
+.banner {
+  border: 1px solid;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin: 12px 0;
+}
+
+.banner-demo {
+  background: var(--demo-bg);
+  border-color: var(--demo-border);
+}
+
+.banner-live {
+  background: var(--live-bg);
+  border-color: var(--live-border);
+}
+
+.banner-error,
+.error-panel {
+  background: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+button,
+.button-like {
+  font: inherit;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+  margin-top: 12px;
+}
+
+button.link {
+  border: none;
+  background: none;
+  color: var(--accent);
+  padding: 0 4px;
+  text-decoration: underline;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.paste {
+  display: grid;
+  gap: 8px;
+}
+
+.paste label {
+  display: grid;
+  gap: 4px;
+}
+
+input[type='text'],
+textarea {
+  font: inherit;
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.paste button {
+  justify-self: start;
+}
+
+.input-files,
+.file-status,
+.input-errors {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.input-files li,
+.file-status > li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+
+.input-errors li {
+  color: var(--error-text);
+  background: var(--error-bg);
+  border-radius: 4px;
+  padding: 4px 8px;
+  margin-top: 4px;
+}
+
+.status-label-complete {
+  color: var(--muted);
+}
+
+.status-label-error,
+.status-label-unsupported {
+  color: var(--error-text);
+  font-weight: 600;
+}
+
+.coverage-notes {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.group-job {
+  margin-left: 8px;
+}
+
+.group-rule {
+  margin-left: 8px;
+}
+
+.finding-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin: 8px 0;
+}
+
+.finding-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.severity {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.severity-critical {
+  color: var(--sev-critical);
+}
+
+.severity-high {
+  color: var(--sev-high);
+}
+
+.severity-medium {
+  color: var(--sev-medium);
+}
+
+.severity-low {
+  color: var(--sev-low);
+}
+
+.finding-detail {
+  margin: 6px 0;
+}
+
+.snippet {
+  background: var(--code-bg);
+  border-radius: 4px;
+  padding: 8px 0;
+  margin: 6px 0;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+.snippet-line {
+  display: flex;
+  white-space: pre;
+}
+
+.line-no {
+  display: inline-block;
+  min-width: 3.5em;
+  padding: 0 8px;
+  text-align: right;
+  color: var(--muted);
+  user-select: none;
+}
+
+.chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0;
+  margin: 6px 0;
+}
+
+.chip {
+  font-size: 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 8px;
+  overflow-wrap: anywhere;
+}
+
+.chip-label {
+  color: var(--muted);
+}
+
+footer {
+  margin: 16px 0;
+}
