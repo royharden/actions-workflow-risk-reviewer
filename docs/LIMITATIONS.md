@@ -1,0 +1,13 @@
+# Limits and evidence boundaries
+
+Construction is source-only; all execution and deployment remain unverified. [DEFERRED-VALIDATION.md](DEFERRED-VALIDATION.md) is the single validation list.
+
+- Six rules describe selected lexical patterns, not a complete security audit. Dynamic runners, shell taint, cache poisoning, vulnerable-action lookup and artifact integrity are outside this engine.
+- Named false negatives include attacker data laundered through `steps.*.outputs` and unclassified `workflow_call` inputs. The eval reports named misses instead of hiding them. Synthetic look-alikes, unknown checkout references and the small sample limit generalization; mapped scanner families differ in granularity.
+- A gate means “gate observed — exploitability unverified.” YAML alone cannot establish environment protection, maintainer label practices or repository policy. Likely-benign findings remain accessible and reviewable.
+- Citations prove only that a quote occurs on a supplied line. They do not prove the explanation true. Invalid, empty, truncated or unsupported model output forces `unsure` and hides free-form explanation. Delimited input is a mitigation, not prompt-injection immunity.
+- Fixes are deterministic, narrow and never applied. Pin fixes need the exact action/ref pair; fixture pins are fabricated. Permissions fixes are workflow-level only. Shell substitution refuses unsupported shells, aliases, anchors, ambiguous quotes, heredocs, backticks and command substitutions. Passing the mechanical checker does not prove equivalent behavior; manual review remains necessary.
+- Parser limits: 20 files, 256 KiB UTF-8/file, 100 jobs, 500 steps/file, depth 64, 50,000 nodes, 100 alias resolutions. Unsupported/invalid files are “not reviewed,” never clean. Large explanation contexts are refused rather than silently shortened.
+- Recorded specification deviations: base-ref checkout is a rule exclusion rather than a no-op gate; `screen` is not vendored (delimiters, strict schemas and citation checking are used); `.github/workflows/ci.yml` and `baselines.yml` are intentionally absent in Dirty Mode. Dogfood zero-findings and baseline dispatch acceptance are deferred, not passed.
+- No real baseline or live model measurement exists. Hand-written examples are excluded from live-triage rates. Optional hazmat data and external taxonomy annotations await provenance/license verification.
+- Browser localStorage can fail; a visible memory fallback loses data on reload. Clear local data does not delete append-only remote review history. Live storage and auth isolation require later real-user validation.

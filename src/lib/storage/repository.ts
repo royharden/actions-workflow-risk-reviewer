@@ -2,14 +2,14 @@
 // arrives in M5 behind the same interface. Events are append-only: there is no update or delete of a single event.
 import type { RulingEvent } from '../../core/rulings';
 
-export type Persistence = 'local' | 'memory';
+export type Persistence = 'local' | 'memory' | 'remote';
 
 export interface RulingRepository {
   /** Appends one event; an event whose `eventId` is already stored is ignored (D31 dedup). */
   appendRuling(event: RulingEvent): Promise<void>;
   /** Every stored event in append order. */
   listRulings(): Promise<RulingEvent[]>;
-  /** "Clear local data": removes every stored event. */
+  /** Clear local data; a remote adapter retains append-only server history. */
   clearAll(): Promise<void>;
   /** Where events currently live; `memory` means they are lost on reload. */
   persistence(): Persistence;

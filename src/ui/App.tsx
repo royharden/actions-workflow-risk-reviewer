@@ -6,9 +6,10 @@ import { webCryptoHasher } from '../lib/hasher-webcrypto';
 import { getMode, type AppMode } from '../lib/mode';
 import type { CombinedTriage } from '../core/combine';
 import { createBrowserExplanationSession } from '../lib/explanations';
-import { createOwnedReviewRun } from '../lib/runs';
 import { newEventId } from '../lib/download';
 import { createLocalRepository } from '../lib/storage/local';
+import { createSupabaseRepository, reviewDatabase } from '../lib/storage/supabase';
+import { getSupabase } from '../lib/supabase';
 import { fixSetupFor, makeRulingEvent, resolveRulings, reviewScan, type ReviewedScan, type RulingDecision } from '../lib/review';
 import { SetupBanner } from './SetupBanner';
 import { InputPanel } from './InputPanel';
@@ -45,7 +46,12 @@ export function App() {
 
 /** Identity-keyed by AuthGate: account changes synchronously remove the old review screen. */
 function ReviewWorkbench({ mode, userId }: { mode: AppMode; userId: string | null }) {
-  const repository = useMemo(() => mode.kind === 'demo' ? createLocalRepository() : null, [mode]);
+  const remoteRepository = useMemo(() => {
+    if (mode.kind !== 'live' || userId === null) return null;
+    const client = getSupabase();
+    return client === null ? null : createSupabaseRepository(reviewDatabase(client), userId);
+  }, [mode, userId]);
+  const repository = useMemo(() => mode.kind === 'demo' ? createLocalRepository() : remoteRepository, [mode, remoteRepository]);
   const explanations = useMemo(() => {
     const controller = createBrowserExplanationSession(mode, webCryptoHasher);
     controller.setUser(userId);
@@ -132,11 +138,13 @@ function ReviewWorkbench({ mode, userId }: { mode: AppMode; userId: string | nul
       if (active.current && revision.current === currentRevision) {
         setReviewed(next);
         setInputErrors(scanned.inputErrors);
-        if (mode.kind === 'live' && userId !== null && scanned.inputErrors.length === 0) {
-          const ownedRun = await createOwnedReviewRun(userId, next.scan);
-          if (active.current && revision.current === currentRevision) {
-            if (ownedRun.ok) setRunId(ownedRun.runId);
-            else setRunFailure(ownedRun.reason);
+        if (mode.kind === 'live' && scanned.inputErrors.length === 0) {
+          try {
+            if (remoteRepository === null) throw new Error('Live review storage is unavailable.');
+            const savedRunId = await remoteRepository.saveScan(next.scan);
+            if (active.current && revision.current === currentRevision) setRunId(savedRunId);
+          } catch (err) {
+            if (active.current && revision.current === currentRevision) setRunFailure(err instanceof Error ? err.message : String(err));
           }
         }
       }
@@ -148,7 +156,8 @@ function ReviewWorkbench({ mode, userId }: { mode: AppMode; userId: string | nul
   }
 
   async function rule(finding: Finding, decision: RulingDecision, reason: string | undefined) {
-    if (storageBusy.current || busy || reviewed === null || repository === null) return;
+    if (storageBusy.current || busy || reviewed === null || repository === null || (mode.kind === 'live' && runId === null)) return;
+    const currentRevision = revision.current;
     const fix = reviewed.fixes.get(finding.id);
     if ((decision === 'accept_fix' || decision === 'reject_fix') && fix?.kind !== 'passed') return;
     storageBusy.current = true;
@@ -156,13 +165,30 @@ function ReviewWorkbench({ mode, userId }: { mode: AppMode; userId: string | nul
     setStorageFailure(null);
     try {
       await repository.appendRuling(makeRulingEvent(newEventId(), finding, decision, fix, reason));
+      if (!active.current || revision.current !== currentRevision) return;
+      const stored = await repository.listRulings();
+      if (active.current && revision.current === currentRevision) { setEvents(stored); setStorageNote(repository.note()); }
+    } catch (err) {
+      if (active.current && revision.current === currentRevision) setStorageFailure(err instanceof Error ? err.message : String(err));
+    } finally {
+      storageBusy.current = false;
+      if (active.current) setSaving(false);
+    }
+  }
+
+  async function reloadRulings() {
+    if (storageBusy.current || busy || repository === null) return;
+    storageBusy.current = true;
+    setLoadingRulings(true);
+    setStorageFailure(null);
+    try {
       const stored = await repository.listRulings();
       if (active.current) { setEvents(stored); setStorageNote(repository.note()); }
     } catch (err) {
       if (active.current) setStorageFailure(err instanceof Error ? err.message : String(err));
     } finally {
       storageBusy.current = false;
-      if (active.current) setSaving(false);
+      if (active.current) setLoadingRulings(false);
     }
   }
 
@@ -175,7 +201,8 @@ function ReviewWorkbench({ mode, userId }: { mode: AppMode; userId: string | nul
       await repository?.clearAll();
       if (!active.current) return;
       const consent = clearExplanationConsents();
-      setEvents([]);
+      // Remote events remain server history and can replay on the next scan; no local rulings persist in live mode.
+      if (repository?.persistence() !== 'remote') setEvents([]);
       updateFiles([]);
       setInputEpoch((epoch) => epoch + 1);
       setStorageNote([repository?.note(), consent.note].filter(Boolean).join(' ') || null);
@@ -191,10 +218,11 @@ function ReviewWorkbench({ mode, userId }: { mode: AppMode; userId: string | nul
       <main>
         <section className="panel local-data">
           <div className="row">
-            <span className="small muted">{loadingRulings ? 'Loading local rulings…' : repository !== null ? 'Rulings stay in this browser until cleared.' : 'Live rulings are currently unavailable.'}</span>
+            <span className="small muted">{loadingRulings ? 'Loading rulings…' : repository?.persistence() === 'remote' ? 'Rulings are saved to your signed-in account.' : repository !== null ? 'Rulings stay in this browser until cleared.' : 'Live rulings are currently unavailable.'}</span>
+            <button type="button" disabled={busy || repository === null} onClick={() => void reloadRulings()}>Reload rulings</button>
             <button type="button" disabled={busy} onClick={() => void clearLocalData()}>Clear local data</button>
           </div>
-          <p className="small muted">Clears stored local rulings, explanation consent, and this tab’s workflow inputs and results.</p>
+          <p className="small muted">Clears stored local rulings, explanation consent, and this tab’s workflow inputs and results. Saved live runs, findings and append-only rulings remain in your account.</p>
           {storageNote !== null && <p className="storage-note small" role="status">{storageNote}</p>}
           {storageFailure !== null && <p className="input-errors" role="alert">Could not save or load rulings: {storageFailure}</p>}
         </section>
@@ -213,7 +241,7 @@ function ReviewWorkbench({ mode, userId }: { mode: AppMode; userId: string | nul
             <p>{scanFailure}</p>
           </section>
         )}
-        {runFailure !== null && <section className="panel error-panel" role="alert">Live explanation is unavailable because the review run could not be saved: <code>{runFailure}</code>. No model call was made.</section>}
+        {runFailure !== null && <section className="panel error-panel" role="alert">Live rulings and explanations are unavailable because the review snapshot could not be saved: <code>{runFailure}</code>. No model call was made. Scan again to retry saving.</section>}
         {reviewed !== null && rulings !== null && (
           <>
             <FileStatusList files={reviewed.scan.files} />
@@ -224,7 +252,7 @@ function ReviewWorkbench({ mode, userId }: { mode: AppMode; userId: string | nul
               triages={triages}
               rulings={rulings.status}
               disabled={busy}
-              rulingDisabled={repository === null}
+              rulingDisabled={repository === null || (mode.kind === 'live' && runId === null)}
               explanation={{ sources: files, mode, userId, runId, explanations, onTriage: recordTriage, disabled: busy }}
               onRule={(finding, decision, reason) => void rule(finding, decision, reason)}
             />
