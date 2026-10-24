@@ -1,0 +1,36 @@
+name: Post-CI integration
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - run: make integration-test
+  merge-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+        with:
+          ref: refs/pull/${{ github.event.workflow_run.pull_requests[0].number }}/merge
+      - run: ./scripts/preview.sh
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Summarize run
+        env:
+          BRANCH: ${{ github.event.workflow_run.head_branch }}
+          COMMIT_MSG: ${{ github.event.workflow_run.head_commit.message }}
+        run: |
+          echo "Branch: $BRANCH ($COMMIT_MSG)"
+          echo "Branch again: ${{ github.event.workflow_run.head_branch }}"
+          echo "Commit: ${{ github.event.workflow_run.head_commit.message }}"

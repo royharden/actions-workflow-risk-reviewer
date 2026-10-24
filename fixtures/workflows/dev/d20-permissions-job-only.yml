@@ -1,0 +1,36 @@
+name: Maintenance
+
+on:
+  workflow_dispatch:
+    inputs:
+      level:
+        type: choice
+        options: [info, debug]
+
+jobs:
+  noop:
+    permissions: {}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "no token needed"
+  read:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+      - run: echo "Level: ${{ github.event.inputs.level }}"
+  tag:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+      - env:
+          LEVEL: ${{ github.event.inputs.level }}
+        run: git tag "nightly-$LEVEL" && git push origin --tags
+  admin:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "legacy admin job"

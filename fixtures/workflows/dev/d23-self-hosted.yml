@@ -1,0 +1,41 @@
+name: Hardware tests
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+    inputs:
+      runner:
+        type: string
+        default: ubuntu-latest
+
+permissions:
+  contents: read
+
+jobs:
+  scalar:
+    runs-on: self-hosted
+    steps:
+      - run: echo scalar
+  array:
+    runs-on: [self-hosted, linux, x64]
+    steps:
+      - run: echo array
+  matrix-mixed:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, self-hosted]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: echo matrix
+  matrix-hosted:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: echo hosted
+  dynamic:
+    runs-on: ${{ inputs.runner }}
+    steps:
+      - run: echo dynamic

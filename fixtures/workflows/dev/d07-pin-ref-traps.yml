@@ -1,0 +1,26 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+      - uses: ./.github/actions/setup-tools
+      - uses: octo-org/lint-action@a1b2c3d
+      - uses: octo-org/format-action@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3g
+      - uses: octo-org/spell-action@main
+      - uses: octo-org/yaml-action@v2.3.1
+      - uses: octo-org/monorepo/tools/setup@v1
+      - uses: docker://alpine@sha256:0f2d1c3b4a5968778695a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3
+        with:
+          args: echo digest-pinned
+      - uses: docker://alpine:3.20
+        with:
+          args: echo tag-only

@@ -1,0 +1,29 @@
+name: PR metadata
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, edited]
+
+permissions:
+  contents: read
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Via env
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          HEAD_LABEL: ${{ github.event.pull_request.head.label }}
+          HEAD_DEFAULT: ${{ github.event.pull_request.head.repo.default_branch }}
+          GH_HEAD_REF: ${{ github.head_ref }}
+        run: echo "$PR_TITLE $PR_BODY $HEAD_REF $HEAD_LABEL $HEAD_DEFAULT $GH_HEAD_REF"
+      - name: Direct interpolation
+        run: |
+          echo "Head ref: ${{ github.event.pull_request.head.ref }}"
+          echo "Head label: ${{ github.event.pull_request.head.label }}"
+          echo "Fork default branch: ${{ github.event.pull_request.head.repo.default_branch }}"
+          echo "Branch: ${{ github.head_ref }}"
+          echo "PR number: ${{ github.event.pull_request.number }}"

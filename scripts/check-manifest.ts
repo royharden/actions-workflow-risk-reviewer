@@ -273,10 +273,12 @@ function main(): void {
     items.push(i);
   });
 
-  // Canonical order must be total, or the lock hash depends on input order.
+  // Canonical order must be total, or the lock hash depends on input order. Only held-out items are hashed,
+  // so dev items may legitimately share a line (e.g. two excluded expressions on one dev line).
   const keyOf = (i: Item): string => JSON.stringify([i.file, i.span.startLine, i.rule, i.jobId ?? "", i.label]);
   const seen = new Map<string, number>();
   items.forEach((i, n) => {
+    if (i.split !== "heldout") return;
     const k = keyOf(i);
     if (seen.has(k)) fail(`items[${n}] ties items[${seen.get(k)}] on (file, startLine, rule, jobId, label); split the line or the canonical hash is order-dependent`);
     else seen.set(k, n);

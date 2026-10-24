@@ -1,0 +1,21 @@
+name: PR labeler
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions: write-all
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+      - run: npm ci && npm run check
+  label:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/labeler@8a1e5b9d0c7f2a4e6b8d1c3f3f1c0a9e7b2d4c6f

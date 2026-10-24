@@ -1,0 +1,7 @@
+{
+  "_note": "FIXTURE-ONLY pin table for the dev fixtures and the offline demo. These SHAs are fabricated (obviously fake c0ffee pattern), were never looked up upstream, and must not be used to pin a real workflow. actions/cache@v4 (dev/d05) is deliberately absent so 'needs lookup' / pin_not_in_table is demonstrable.",
+  "pins": [
+    { "action": "actions/checkout", "fromRef": "v4", "sha": "c0ffee00c0ffee00c0ffee00c0ffee00c0ffee04", "source": "fixture-only" },
+    { "action": "actions/setup-node", "fromRef": "v4", "sha": "c0ffee00c0ffee00c0ffee00c0ffee00c0ffee14", "source": "fixture-only" }
+  ]
+}

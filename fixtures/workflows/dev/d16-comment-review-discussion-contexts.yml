@@ -1,0 +1,63 @@
+name: Community activity log
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  pull_request_review_comment:
+    types: [created]
+  discussion:
+    types: [created]
+  gollum:
+
+permissions: {}
+
+jobs:
+  comment:
+    if: github.event_name == 'issue_comment'
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          COMMENT: ${{ github.event.comment.body }}
+        run: |
+          echo "Via env: $COMMENT"
+          echo "Comment: ${{ github.event.comment.body }}"
+  review:
+    if: github.event_name == 'pull_request_review'
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          REVIEW: ${{ github.event.review.body }}
+        run: |
+          echo "Via env: $REVIEW"
+          echo "Review: ${{ github.event.review.body }}"
+  review-comment:
+    if: github.event_name == 'pull_request_review_comment'
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          REVIEW_COMMENT: ${{ github.event.review_comment.body }}
+        run: |
+          echo "Via env: $REVIEW_COMMENT"
+          echo "Review comment: ${{ github.event.review_comment.body }}"
+  discussion:
+    if: github.event_name == 'discussion'
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          D_TITLE: ${{ github.event.discussion.title }}
+          D_BODY: ${{ github.event.discussion.body }}
+        run: |
+          echo "Via env: $D_TITLE / $D_BODY"
+          echo "Title: ${{ github.event.discussion.title }}"
+          echo "Body: ${{ github.event.discussion.body }}"
+  wiki:
+    if: github.event_name == 'gollum'
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          PAGE: ${{ github.event.pages[0].page_name }}
+        run: |
+          echo "Via env: $PAGE"
+          echo "Page: ${{ github.event.pages[0].page_name }}"

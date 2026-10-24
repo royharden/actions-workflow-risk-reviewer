@@ -1,0 +1,22 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: octo-org/shared-workflows/.github/workflows/build.yml@v1
+  test:
+    uses: octo-org/shared-workflows/.github/workflows/test.yml@9b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f3f1c0a9e
+  publish:
+    needs: [build, test]
+    uses: octo-org/release-tools/.github/workflows/publish.yml@7c1e9a3f5b2d8e4a6c0f1b3d5e7a9c2f4b6d8e0a
+    secrets: inherit
+  notify:
+    needs: publish
+    uses: ./.github/workflows/notify.yml
+    secrets: inherit

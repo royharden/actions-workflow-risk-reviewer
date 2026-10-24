@@ -1,0 +1,21 @@
+name: PR tests (pull_request_target)
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out PR head
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Install and test
+        run: |
+          npm ci
+          npm test

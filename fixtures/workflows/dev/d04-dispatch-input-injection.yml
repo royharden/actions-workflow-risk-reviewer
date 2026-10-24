@@ -1,0 +1,19 @@
+name: Manual deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Deployment target
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Announce target
+        run: echo "Deploying to ${{ inputs.target }}"

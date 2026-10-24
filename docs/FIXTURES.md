@@ -85,7 +85,7 @@ Six gates, each annotate-only and each tied to one rule (D9). Base-ref checkout 
 
 | Gate | Rule | Held-out file (item) | Dev file |
 |---|---|---|---|
-| `fork-if` | privileged-trigger-checkout | `h19-prt-fork-if.yml` (job `size`, lines 11–13) | _dev rows merged by INT_ |
+| `fork-if` | privileged-trigger-checkout | `h19-prt-fork-if.yml` (job `size`, lines 11–13) | see "Dev fixtures" below |
 | `author-association` | privileged-trigger-checkout | `h20-comment-author-assoc.yml` (job `bench`, lines 12–14) | |
 | `label` | privileged-trigger-checkout | `h17-prt-label-gated.yml` (job `test`, lines 12–14) | |
 | `environment` | privileged-trigger-checkout | `h18-prt-environment-gated.yml` (job `integration`, lines 13–16) | |
@@ -112,8 +112,7 @@ Per rule ≥3 `positive` and ≥3 look-alikes (`lookalike_excluded` + `lookalike
 
 ## Trap → file table
 
-Spec "Named traps" plus the plan's trap list. Held-out rows below; dev rows are merged by the INT from
-`docs/FIXTURES.dev-part.md`.
+Spec "Named traps" plus the plan's trap list. Held-out rows below; dev rows are in "Dev fixtures" at the end.
 
 | Trap | Label | Held-out file (lines) |
 |---|---|---|
@@ -185,3 +184,115 @@ Each `sha256` is `sha256sum` of the committed bytes. `manifestHeldoutSha256` is 
 `span.startLine` (numeric), then `rule`, then `jobId` (`null` as `""`), then `label`, comparing strings by code unit
 (`<`/`>`, not locale). The order is total: `check-manifest.ts` rejects two items that tie on those five keys. Any later
 edit to a held-out file or item needs a new lock `version` and a contamination note.
+
+## Dev fixtures
+
+Author: 0522_Claude_Opus55_Sub_M0-DevAuthor, 2026-10-24. Covers `fixtures/workflows/dev/d01`–`d24` and
+the dev entries of `fixtures/manifest.json` (117 items over 24 files). Paths are relative to `fixtures/workflows/`. Line numbers are 1-based and follow
+the "Span conventions" section above.
+
+### Demo showcase (d01–d06, in demo order)
+
+| File | What it shows | Items |
+|---|---|---|
+| `dev/d01-prt-head-checkout.yml` | `pull_request_target` checkout of `head.sha`, then `npm ci` / `npm test` | privileged-trigger-checkout positive, L15–17 |
+| `dev/d02-prt-label-gated.yml` | label-gated twin of d01 (`types: [labeled]`, job `if:` on `safe-to-test`) | privileged-trigger-checkout flagged benign (label), L16–18 |
+| `dev/d03-pr-title-body-injection.yml` | two attacker-controlled expressions in one `run:` step: title unquoted (L16), body inside double quotes (L17); bash via `ubuntu-latest`, so both are env-indirection candidates | template-injection positive ×2 |
+| `dev/d04-dispatch-input-injection.yml` | `inputs.target` in `run:` under a `workflow_dispatch`-only trigger | template-injection flagged benign (dispatch-only), L19 |
+| `dev/d05-unpinned-checkout.yml` | `actions/checkout@v4` (L14) and `actions/setup-node@v4` (L15) are in `pins.json`; `actions/cache@v4` (L18) is deliberately absent, which demonstrates `pin_not_in_table` | unpinned-uses positive ×3 |
+| `dev/d06-malformed-yaml.yml` | unterminated flow sequence `branches: [main` | `expectedStatus: error`, no items |
+
+### Trap → file (dev)
+
+| Trap | Label | Dev file : line |
+|---|---|---|
+| short-sha | positive | `dev/d07-pin-ref-traps.yml`:16 |
+| non-hex-40 | positive | `dev/d07-pin-ref-traps.yml`:17 |
+| local-action | excluded | `dev/d07-pin-ref-traps.yml`:15; `dev/d08-reusable-and-inherit.yml`:21 (local reusable workflow) |
+| docker-digest | excluded | `dev/d07-pin-ref-traps.yml`:21 |
+| docker-tag | positive | `dev/d07-pin-ref-traps.yml`:24 |
+| reusable-workflow-tag | positive | `dev/d08-reusable-and-inherit.yml`:12 |
+| base-ref-checkout | excluded | `dev/d09-prt-base-ref-checkout.yml`:15–17 |
+| head-sha-checkout | positive | `dev/d01-prt-head-checkout.yml`:15–17 |
+| run-checked-out-code | positive | `dev/d10-workflow-run-head.yml`:15–17 (`workflow_run.head_sha`, then `make`) |
+| label-gated | flagged benign | `dev/d02-prt-label-gated.yml`:16–18 |
+| environment-gated | flagged benign | `dev/d12-prt-environment-gated.yml`:15–17 |
+| fork-if-gated | flagged benign | `dev/d13-prt-fork-if.yml`:15–17 |
+| author-association-gated | flagged benign | `dev/d11-issue-comment-author-assoc.yml`:17–19 |
+| github-sha-in-run | excluded | `dev/d15-issue-contexts.yml`:25 |
+| pr-title-in-run | positive | `dev/d03-pr-title-body-injection.yml`:16 |
+| dispatch-input-in-run | flagged benign | `dev/d04-dispatch-input-injection.yml`:19; `dev/d20-permissions-job-only.yml`:22 (`github.event.inputs.*`) |
+| same-expr-in-env | excluded | d10:31,32; d14:24; d15:16,17; d16:22,31,40,49,50,60; d17:19–22,35; d18:16–21; d20:30 |
+| github-script-injection | positive | `dev/d15-issue-contexts.yml`:33 |
+| steps-outputs-laundering | positive (expected miss) | `dev/d17-push-contexts.yml`:38 |
+| workflow-call-input | positive (maintainer) | `dev/d14-dispatch-and-call-inputs.yml`:27 |
+| anchors-aliases | positive | `dev/d24-anchors-aliases.yml`:19 (scalar alias `uses: *checkout`), :30 (step alias `- *greet_step`) |
+| permissions-empty | excluded | `dev/d16-comment-review-discussion-contexts.yml`:14 (workflow level); `dev/d20-permissions-job-only.yml`:12 (job level) |
+| job-only-permissions | excluded | `dev/d20-permissions-job-only.yml`:10 |
+| write-all | positive | `dev/d21-permissions-write.yml`:7 (workflow level); `dev/d20-permissions-job-only.yml`:33 (job level) |
+| fork-write-scope | positive | `dev/d21-permissions-write.yml`:19 |
+| secrets-inherit-external | positive | `dev/d08-reusable-and-inherit.yml`:18 |
+| secrets-inherit-same-repo | flagged benign | `dev/d08-reusable-and-inherit.yml`:22 |
+| workflow-env-secret | positive | `dev/d22-secrets-exposure.yml`:12 |
+| persist-credentials-broad-upload | positive | `dev/d22-secrets-exposure.yml`:20–23 (also `'**'` at 60–63) |
+| persist-credentials-false | excluded | `dev/d22-secrets-exposure.yml`:31–34 |
+| narrow-upload-path | excluded | `dev/d22-secrets-exposure.yml`:40–43 |
+| quoted-boolean | excluded | `dev/d22-secrets-exposure.yml`:50–53 |
+| self-hosted-matrix | positive | `dev/d23-self-hosted.yml`:28 |
+| self-hosted-dynamic | excluded | `dev/d23-self-hosted.yml`:39 |
+| self-hosted-push-only | excluded | `dev/d19-permissions-missing.yml`:22 |
+| ignore-the-rules-comment | positive (still found) | `dev/d19-permissions-missing.yml`:10 (comment on line 1) |
+| malformed-yaml | status `error` | `dev/d06-malformed-yaml.yml` |
+| alias-cycle / merge-key | status `unsupported` | held-out only (not in dev) |
+
+Extra dev look-alikes without a trap slug: no-ref default checkout under `pull_request_target` (d09:23, excluded); unknown ref expression
+(d09:30–32, positive, `refClass: unknown`); a write scope on a non-fork trigger (d20:25, excluded); a job-level `env:` secret (d22:57,
+excluded); workflow `env:` entries with plain values (d17:11, d22:11, excluded); an attacker context inside a job `if:` (d11:22, excluded);
+a finite matrix of hosted labels only (d23:35, excluded); non-listed contexts in `run:` (`github.ref`, `github.run_id`, `github.repository`,
+`secrets.*` in d15; `env.*` in d17:31; `github.event.pull_request.number` in d18:29).
+
+### Gate → file (dev): flagged benign AND contradictory case
+
+| Gate | Flagged benign (gate demotes) | Contradictory risk (gate must NOT demote; label `positive`) |
+|---|---|---|
+| fork-if | `dev/d13-prt-fork-if.yml`:15–17 (`head.repo.full_name == github.repository`) | d13:22–24 (sibling job `lint` without the `if:`); d13:30–32 (inverted `!=`, so only fork PRs run) |
+| author-association | `dev/d11-issue-comment-author-assoc.yml`:17–19 (job `if:` in a folded `>-` scalar) | d11:25–27 (`author_association` is checked only on a later step's `if:`, so the checkout and `ci.sh` run for anyone) |
+| label | `dev/d02-prt-label-gated.yml`:16–18 | `dev/d13-prt-fork-if.yml`:37–39 (label checked only on a later step's `if:`, while `npm ci` runs ungated) |
+| environment | `dev/d12-prt-environment-gated.yml`:15–17 | d12:28–30 (`environment:` sits on job `approve`; checkout job `smoke` has none and no `needs:`) |
+| dispatch-only | `dev/d04-dispatch-input-injection.yml`:19 (`inputs.*`); `dev/d20-permissions-job-only.yml`:22 (`github.event.inputs.*`) | `dev/d14-dispatch-and-call-inputs.yml`:27, 28 (`workflow_call` also present, so the trigger is not dispatch-only) |
+| same-repo-callee | `dev/d08-reusable-and-inherit.yml`:22 (`./.github/workflows/notify.yml`) | d08:18 (callee in another repo, even though SHA-pinned) |
+
+### Contexts coverage (dev)
+
+Each entry has at least one positive in `run:`/`script:` and a benign counterpart (the same expression in `env:`).
+
+| Context | Positive | Benign counterpart |
+|---|---|---|
+| `github.event.pull_request.title` | d03:16 | d18:16 (env) |
+| `github.event.pull_request.body` | d03:17 | d18:17 (env) |
+| `github.event.pull_request.head.ref` | d18:25 | d18:18 (env) |
+| `github.event.pull_request.head.label` | d18:26 | d18:19 (env) |
+| `github.event.pull_request.head.repo.default_branch` | d18:27 | d18:20 (env) |
+| `github.event.issue.title` | d15:21, d15:33 (github-script) | d15:16 (env) |
+| `github.event.issue.body` | d15:22 | d15:17 (env) |
+| `github.event.comment.body` | d16:25 | d16:22 (env); d11:22 (job `if:`) |
+| `github.event.review.body` | d16:34 | d16:31 (env) |
+| `github.event.review_comment.body` | d16:43 | d16:40 (env) |
+| `github.event.discussion.title` | d16:53 | d16:49 (env) |
+| `github.event.discussion.body` | d16:54 | d16:50 (env) |
+| `github.event.head_commit.message` | d17:27 | d17:19, d17:35 (env) |
+| `github.event.head_commit.author.name` | d17:28, d24:26, d24:30 (alias) | d17:20 (env) |
+| `github.event.head_commit.author.email` | d17:29 | d17:21 (env) |
+| `github.event.commits.*.message` | d17:30 (`commits[0]`) | d17:22 (env) |
+| `github.event.pages.*.page_name` | d16:63 (`pages[0]`) | d16:60 (env) |
+| `github.event.workflow_run.head_branch` | d10:35 | d10:31 (env) |
+| `github.event.workflow_run.head_commit.message` | d10:36 | d10:32 (env) |
+| `github.head_ref` | d18:28 | d18:21 (env) |
+| `inputs.*` (maintainer) | d14:27 | d14:24 (env); d04:19 (flagged benign) |
+| `github.event.inputs.*` (maintainer) | d14:28 | d20:30 (env); d20:22 (flagged benign) |
+
+### Pins (`fixtures/pins.json`, fixture-only)
+
+`actions/checkout@v4` → `c0ffee00…ee04`, `actions/setup-node@v4` → `c0ffee00…ee14` (fabricated SHAs, `source: "fixture-only"`). Deliberately
+absent: `actions/cache@v4` (d05:18). Every other unpinned dev ref (d07, d08:12) is also absent, so each one yields "needs lookup". The
+`actions/checkout@v4` anchor in d24:14 has a pin key, but the fixer must refuse it because the node is aliased.

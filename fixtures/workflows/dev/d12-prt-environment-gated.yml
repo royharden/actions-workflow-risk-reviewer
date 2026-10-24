@@ -1,0 +1,31 @@
+name: External PR integration tests
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    environment: external-pr-approval
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - run: npm ci && npm run test:integration
+  approve:
+    runs-on: ubuntu-latest
+    environment: external-pr-approval
+    steps:
+      - run: echo "Approved"
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - run: npm ci && npm run test:smoke

@@ -1,0 +1,30 @@
+name: Aliased steps
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-a:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: &checkout actions/checkout@v4
+      - run: make a
+  build-b:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: *checkout
+      - run: make b
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - &greet_step
+        name: Greet committer
+        run: echo "Hi ${{ github.event.head_commit.author.name }}"
+  greet-again:
+    runs-on: ubuntu-latest
+    steps:
+      - *greet_step

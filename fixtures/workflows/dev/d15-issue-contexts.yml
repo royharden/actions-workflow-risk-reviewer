@@ -1,0 +1,40 @@
+name: Issue triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: read
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo issue
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          echo "Title via env: $ISSUE_TITLE"
+          echo "Body via env: $ISSUE_BODY"
+          echo "Title: ${{ github.event.issue.title }}"
+          echo "Body: ${{ github.event.issue.body }}"
+      - name: Contexts that are not attacker-controlled
+        run: |
+          echo "Commit ${{ github.sha }} on ${{ github.ref }}"
+          echo "Run ${{ github.run_id }} in ${{ github.repository }}"
+      - name: Notify webhook
+        run: curl -fsS -X POST "${{ secrets.FAKE_WEBHOOK_URL_DO_NOT_USE }}" -d ok
+      - name: Log title with github-script
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        with:
+          script: |
+            const title = "${{ github.event.issue.title }}";
+            core.info(`Issue title: ${title}`);
+      - name: Safe github-script
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        with:
+          script: |
+            const title = context.payload.issue.title;
+            core.info(`Issue title length: ${title.length}`);

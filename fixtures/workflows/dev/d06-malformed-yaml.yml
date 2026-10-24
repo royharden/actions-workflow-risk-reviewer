@@ -1,0 +1,11 @@
+name: Broken workflow
+
+on:
+  push:
+    branches: [main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "this file never parses"

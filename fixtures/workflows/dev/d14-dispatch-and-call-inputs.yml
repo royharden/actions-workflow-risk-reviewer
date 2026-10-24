@@ -1,0 +1,28 @@
+name: Deploy (manual or called)
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: string
+        required: true
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show target
+        env:
+          TARGET_ENV: ${{ inputs.environment }}
+        run: |
+          echo "Target (via env): $TARGET_ENV"
+          echo "Target: ${{ inputs.environment }}"
+          echo "Legacy target: ${{ github.event.inputs.environment }}"

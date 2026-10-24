@@ -1,0 +1,17 @@
+name: Triage new pull requests
+
+on:
+  pull_request_target:
+    types: [opened, edited]
+
+permissions:
+  contents: read
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log PR details
+        run: |
+          echo Title: ${{ github.event.pull_request.title }}
+          echo "Body: ${{ github.event.pull_request.body }}"

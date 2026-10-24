@@ -1,0 +1,33 @@
+name: PR size labeler
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  size:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out base
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+      - name: Count files
+        run: git ls-files | wc -l
+  config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+      - run: cat .github/labeler.yml
+  resolved-ref:
+    runs-on: ubuntu-latest
+    steps:
+      - id: resolve
+        run: echo "ref=main" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+        with:
+          ref: ${{ steps.resolve.outputs.ref }}
+      - run: echo "checked out"

@@ -1,0 +1,38 @@
+name: Commit announcer
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  DEPLOY_STAGE: production
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Via env
+        env:
+          MSG: ${{ github.event.head_commit.message }}
+          AUTHOR: ${{ github.event.head_commit.author.name }}
+          EMAIL: ${{ github.event.head_commit.author.email }}
+          FIRST: ${{ github.event.commits[0].message }}
+        run: |
+          echo "$MSG by $AUTHOR <$EMAIL>; first: $FIRST"
+      - name: Direct interpolation
+        run: |
+          echo "Message: ${{ github.event.head_commit.message }}"
+          echo "Author: ${{ github.event.head_commit.author.name }}"
+          echo "Email: ${{ github.event.head_commit.author.email }}"
+          echo "First commit: ${{ github.event.commits[0].message }}"
+          echo "Stage: ${{ env.DEPLOY_STAGE }}"
+      - name: Launder through a step output
+        id: meta
+        env:
+          SUBJECT: ${{ github.event.head_commit.message }}
+        run: echo "subject=$SUBJECT" >> "$GITHUB_OUTPUT"
+      - name: Use laundered output
+        run: echo "Subject: ${{ steps.meta.outputs.subject }}"
