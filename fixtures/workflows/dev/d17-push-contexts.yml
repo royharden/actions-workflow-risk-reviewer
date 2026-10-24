@@ -35,4 +35,4 @@ jobs:
           SUBJECT: ${{ github.event.head_commit.message }}
         run: echo "subject=$SUBJECT" >> "$GITHUB_OUTPUT"
       - name: Use laundered output
-        run: echo "Subject: ${{ steps.meta.outputs.subject }}"
+        run: echo "Subject - ${{ steps.meta.outputs.subject }}"

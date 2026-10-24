@@ -296,3 +296,15 @@ Each entry has at least one positive in `run:`/`script:` and a benign counterpar
 `actions/checkout@v4` → `c0ffee00…ee04`, `actions/setup-node@v4` → `c0ffee00…ee14` (fabricated SHAs, `source: "fixture-only"`). Deliberately
 absent: `actions/cache@v4` (d05:18). Every other unpinned dev ref (d07, d08:12) is also absent, so each one yields "needs lookup". The
 `actions/checkout@v4` anchor in d24:14 has a pin key, but the fixer must refuse it because the node is aliased.
+
+## Notes for readers of the eval (added by INT after dev review)
+
+- **Pin SHAs are not looked up.** Every 40-hex SHA in the fixture workflows and in `fixtures/pins.json` is fixture data. Some may coincide with real
+  upstream commits; none has been verified and none may be copied into a real workflow (`docs/CI.md` requires verification upstream).
+- **Index normalisation.** `[N]` array indexes in an expression (e.g. `github.event.commits[0].message`, `github.event.pages[0].page_name`) are matched
+  as `.*.` segments against `src/core/contexts.json` (d16:63, d17:30).
+- **Deliberate unknown-ref false positive.** d09:30–32 checks out `${{ steps.resolve.outputs.ref }}` under `pull_request_target`; the rule cannot resolve
+  the ref and fires with `refClass: unknown` (labelled `positive`). In reality it resolves to `main`, so this item will inflate apparent precision
+  only if the labelling is read as ground truth about exploitability; it is labelled to match the rule boundary.
+- **Broad-upload coverage.** Dev fixtures use `.` and `**` broad paths as positives; `${{ github.workspace }}` appears only in an excluded case (d22:50–53)
+  and `./` not at all in dev. Unit tests in `tests/core/rules.test.ts` cover both inline.
