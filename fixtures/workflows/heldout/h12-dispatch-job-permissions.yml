@@ -1,0 +1,29 @@
+name: Manual deploy
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment
+        required: true
+        default: staging
+      dry_run:
+        description: Skip the final push
+        required: false
+        default: "true"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+      - name: Deploy
+        run: ./scripts/deploy.sh --env "${{ inputs.environment }}"
+      - name: Report
+        run: echo "dry run is ${{ github.event.inputs.dry_run }}"
+  smoke:
+    runs-on: self-hosted
+    permissions:
+      contents: read
+    steps:
+      - run: ./scripts/smoke.sh

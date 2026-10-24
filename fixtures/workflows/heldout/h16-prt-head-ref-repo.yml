@@ -1,0 +1,19 @@
+name: Fork PR checks
+on:
+  pull_request_target:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+      - run: make test
+  report:
+    runs-on: [self-hosted, linux, x64]
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+      - run: echo "Base branch checked out for reporting"

@@ -1,0 +1,21 @@
+name: PR triage and integration
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: acme-org/pr-labeler@1155c6e9846dc2bfed4dfe239c6dc75e1ee0af87
+        with:
+          config: .github/labels.yml
+  integration:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+      - run: make integration-test

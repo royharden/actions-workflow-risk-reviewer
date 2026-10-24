@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "seed": 25,
+  "freezeDate": "2026-10-24",
+  "files": [
+    {
+      "file": "heldout/h01-unpinned-mixed-refs.yml",
+      "sha256": "635179759a0509166523c59d84f9bc638f3f62b33afde28a586e40b8d6b599c1"
+    },
+    {
+      "file": "heldout/h02-unpinned-nonhex-docker.yml",
+      "sha256": "75f5221cf266c88e6f0e513f4a3d2f9a2a5c1291ca1566d77c72395e720dadc7"
+    },
+    {
+      "file": "heldout/h03-reusable-tag-inherit.yml",
+      "sha256": "79a62a115c4380e1720360771215939ca3628ffacc3d2daa797803bdf2affa8a"
+    },
+    {
+      "file": "heldout/h04-inherit-same-repo.yml",
+      "sha256": "1f664e3ee62b3c763f1417921e88b47d567cf740cbc8ca0da6303c2775c8554a"
+    },
+    {
+      "file": "heldout/h05-workflow-env-secret.yml",
+      "sha256": "8c80e4a58ec177857eebc7fca6f4934fe2353295e2e4e665543feb2dc7edd153"
+    },
+    {
+      "file": "heldout/h06-checkout-upload-variants.yml",
+      "sha256": "e931fb4d515f8f26e5e1de0002c29e77f8339a3e98d3891b44aa5d77656e3621"
+    },
+    {
+      "file": "heldout/h07-issues-anchor-alias.yml",
+      "sha256": "7e63751f71765e069d9f0ec290449e0bdd3a3b7c5628e41e9395baf3ae4985de"
+    },
+    {
+      "file": "heldout/h08-permissions-missing.yml",
+      "sha256": "3cab6456e39a0abf5a7f4faeff5cc850a32829ba24561b32865b2cb3b63859da"
+    },
+    {
+      "file": "heldout/h09-call-input-write-all.yml",
+      "sha256": "fdfac8cc05362c46ad15d05d83915fcd833a6764f3dae4c427fefe8803e96b81"
+    },
+    {
+      "file": "heldout/h10-pr-write-scope-self-hosted.yml",
+      "sha256": "9c1e07a57375e36e8d471eb4bef9f7866c1ae6bc93c9b719bd4febcc4fbf29f8"
+    },
+    {
+      "file": "heldout/h11-empty-permissions-matrix.yml",
+      "sha256": "7f8bf5afdff2068e7e0df8d226294eefcd0d09d868a2a034e3cf94143c5f9874"
+    },
+    {
+      "file": "heldout/h12-dispatch-job-permissions.yml",
+      "sha256": "f023751f8e2b27a51e349852f26969606800062486c8831e336d74ed50ea00d4"
+    },
+    {
+      "file": "heldout/h13-prt-head-sha-build.yml",
+      "sha256": "d8625c401e3683c3e4abd02f889377b6b26988c72c11e3a615f77fdd3ec2630c"
+    },
+    {
+      "file": "heldout/h14-workflow-run-head-sha.yml",
+      "sha256": "bd37b654cb910b37e1ed33e610442e660240b41d3282e0e4b1ccbda998e4fd42"
+    },
+    {
+      "file": "heldout/h15-comment-merge-ref.yml",
+      "sha256": "117c42e950c0b13e54caa7da07897e27b33fdd259845573109d27d49227c74c1"
+    },
+    {
+      "file": "heldout/h16-prt-head-ref-repo.yml",
+      "sha256": "4c2b045bdf866062ec72169307fab62402197fdea9288263af1cdd584a454733"
+    },
+    {
+      "file": "heldout/h17-prt-label-gated.yml",
+      "sha256": "a573c5d49f396fd236968d485e52500e8f7ce5bc9a2f6da5ef65bdf05887c446"
+    },
+    {
+      "file": "heldout/h18-prt-environment-gated.yml",
+      "sha256": "ee1cd29687b27fece9c093f0569fb2252cc55523909d6b1be3cae53b26a11c26"
+    },
+    {
+      "file": "heldout/h19-prt-fork-if.yml",
+      "sha256": "650bb9a16528836d095d7ee4c3a8ed2bc5f566273481f0816ee3050cb1d359dc"
+    },
+    {
+      "file": "heldout/h20-comment-author-assoc.yml",
+      "sha256": "00a1ac5a58981b4f1dabcba4e12a1fdb87bbf6f74167dee0affd76c93714b4eb"
+    },
+    {
+      "file": "heldout/h21-prt-base-ref.yml",
+      "sha256": "414fdec70e69d4fcc574642d381d6cedbd7f2d96cd6eca878675d0327d7ae63a"
+    },
+    {
+      "file": "heldout/h22-pr-title-injection.yml",
+      "sha256": "874638239a25070d36c56285d1eb90ae3d4c7a82331e95c86540e0f7f3aacef5"
+    },
+    {
+      "file": "heldout/h23-malformed-yaml.yml",
+      "sha256": "8a756a73c74be2ba4c19eead50845cf3a06587e7d0e56dd401b1a933751d6c8d"
+    },
+    {
+      "file": "heldout/h24-merge-key-step.yml",
+      "sha256": "7d44a2b13883caef208d5a83d7b0f70a62aa79cdedc692f44b0c3587215a01fa"
+    }
+  ],
+  "manifestHeldoutSha256": "09c675ad4e98d3869d5d6c673e1cba674efb3238eeea83550c51fd98fe849d67",
+  "note": "Held-out split frozen 2026-10-24 before any rule code. sha256 = sha256sum of the committed bytes (LF, -text). manifestHeldoutSha256 = SHA-256 of JSON.stringify(held-out items, schema key order, sorted by file, span.startLine, rule, jobId (null as empty), label; code-unit string compare), see docs/FIXTURES.md. Any later edit to a held-out file or item requires a new lock version and a contamination note."
+}

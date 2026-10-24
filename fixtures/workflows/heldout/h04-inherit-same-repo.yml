@@ -1,0 +1,16 @@
+name: Deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deploy:
+    uses: ./.github/workflows/deploy-shared.yml
+    with:
+      target: production
+    secrets: inherit
+  scan:
+    uses: acme-org/ci-templates/.github/workflows/scan.yml@0fb997315bd994bcd11ee5af47ad309b058c9dd2
+    secrets: inherit

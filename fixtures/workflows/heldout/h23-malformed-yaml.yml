@@ -1,0 +1,14 @@
+name: Broken workflow
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unclosed quote
+        run: "echo start
+     - run: make build

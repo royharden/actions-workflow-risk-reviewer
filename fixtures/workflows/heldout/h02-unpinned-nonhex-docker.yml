@@ -1,0 +1,20 @@
+name: Container checks
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 3 * * 1"
+permissions: write-all
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9e4a7c2f1b8d3e6a0c5f9b2d7e4a1c8f3b6d0e9k
+      - name: Lint Dockerfile
+        uses: docker://hadolint/hadolint:v2.12.0
+        with:
+          args: hadolint Dockerfile
+      - name: Shell check
+        uses: docker://koalaman/shellcheck@sha256:0fb997315bd994bcd11ee5af47ad309b058c9dd2609883e820696e456106648e
+        with:
+          args: scripts/build.sh

@@ -1,0 +1,17 @@
+name: Nightly build
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 2 * * *"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+      - run: make build
+  heavy-tests:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+      - run: make test-all

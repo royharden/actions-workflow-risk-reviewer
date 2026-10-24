@@ -1,0 +1,32 @@
+name: PR summary
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Echo PR details
+        run: |
+          echo "Title: ${{ github.event.pull_request.title }}"
+          echo "PR number ${{ github.event.pull_request.number }}"
+          echo "Commit ${{ github.sha }}"
+          echo "Body: ${{ github.event.pull_request.body }}"
+      - name: Comment
+        uses: acme-org/pr-commenter@fa414c56777c145381f0a8f4d587f0fb0f56e84a
+        with:
+          message: "Thanks for ${{ github.event.pull_request.title }}"
+  summary:
+    runs-on: ${{ vars.CI_RUNNER }}
+    steps:
+      - id: meta
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: echo "title=$PR_TITLE" >> "$GITHUB_OUTPUT"
+      - name: Print summary
+        run: echo "Summary for ${{ steps.meta.outputs.title }}"

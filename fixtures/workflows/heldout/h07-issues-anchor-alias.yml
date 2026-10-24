@@ -1,0 +1,19 @@
+name: Issue greeter
+on:
+  issues:
+    types: [opened]
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Announce
+        run: &announce echo "New issue - ${{ github.event.issue.title }}"
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log number
+        run: echo "Issue number ${{ github.event.issue.number }}"
+      - name: Repeat announce
+        run: *announce

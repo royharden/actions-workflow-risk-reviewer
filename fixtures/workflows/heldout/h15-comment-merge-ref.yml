@@ -1,0 +1,23 @@
+name: Slash test command
+on:
+  issue_comment:
+    types: [created]
+permissions:
+  contents: read
+jobs:
+  slash-test:
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/test')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log command
+        uses: actions/github-script@bb05918eea218524039edfa00cbbf23ca371c63a
+        with:
+          script: |
+            const body = `${{ github.event.comment.body }}`;
+            core.info(`command: ${body}`);
+      - name: Checkout PR merge ref
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/merge
+          fetch-depth: 0
+        uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+      - run: ./scripts/ci.sh

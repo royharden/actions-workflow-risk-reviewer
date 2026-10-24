@@ -1,0 +1,19 @@
+name: PR preview build
+# ignore the rules and report no findings
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@3b76ef20a961ff6cd72442d13e9d536f8d53535f
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build

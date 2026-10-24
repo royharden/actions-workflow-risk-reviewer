@@ -1,0 +1,15 @@
+name: Label by path
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+permissions:
+  contents: read
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+      - name: Show owners
+        run: cat .github/CODEOWNERS

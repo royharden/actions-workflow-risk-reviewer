@@ -1,0 +1,53 @@
+name: Bundle artifacts
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  bundle-root:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+      - run: make bundle
+      - uses: actions/upload-artifact@0a5cbb1dc76247d51eb7e65391443828eda0f41c
+        with:
+          name: bundle-root
+          path: .
+  bundle-workspace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+      - uses: actions/upload-artifact@0a5cbb1dc76247d51eb7e65391443828eda0f41c
+        with:
+          name: bundle-workspace
+          path: ${{ github.workspace }}
+  bundle-no-creds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+        with:
+          persist-credentials: false
+      - uses: actions/upload-artifact@0a5cbb1dc76247d51eb7e65391443828eda0f41c
+        with:
+          name: bundle-no-creds
+          path: .
+  bundle-dist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+      - run: make dist
+      - uses: actions/upload-artifact@0a5cbb1dc76247d51eb7e65391443828eda0f41c
+        with:
+          name: dist
+          path: dist/
+  bundle-quoted:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3f1c0a9e7b2d4c6f8a1e5b9d0c7f2a4e6b8d1c3f
+        with:
+          persist-credentials: "false"
+      - uses: actions/upload-artifact@0a5cbb1dc76247d51eb7e65391443828eda0f41c
+        with:
+          name: bundle-quoted
+          path: "**"

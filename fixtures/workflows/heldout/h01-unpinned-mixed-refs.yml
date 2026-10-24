@@ -1,0 +1,22 @@
+name: Build and lint
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@main
+        with:
+          node-version: 20
+      - uses: actions/cache@4e8f2a1
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+      - uses: ./.github/actions/lint
+      - uses: docker://ghcr.io/acme-org/linter@sha256:b1af901af906510843e000a6fa414c56777c145381f0a8f4d587f0fb0f56e84a
+      - name: Show commit
+        run: echo "Building ${{ github.event.head_commit.message }}"
